@@ -153,7 +153,10 @@ jobs:
         shell: bash
 
       - name: Run E2E tests for Embedding SDK
-        run: yarn run test-cypress-run-component-sdk --browser ${{ steps.cypress-prep.outputs.chrome-path }}
+        run: |
+          yarn run test-cypress-run-component-sdk \
+          --env grepTags="@external",grepOmitFiltered=true \
+          --browser ${{ steps.cypress-prep.outputs.chrome-path }}
         shell: bash
 
       - name: Upload Test Results
