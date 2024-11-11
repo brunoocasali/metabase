@@ -82,6 +82,8 @@ export interface StaticVisualizationProps {
   isStorybook?: boolean;
 }
 
+export type GraphMetricName = string | null;
+
 export interface VisualizationProps {
   series: Series;
   card: Card;
@@ -135,7 +137,7 @@ export interface VisualizationProps {
   onOpenTimelines?: () => void;
 
   "graph.dimensions"?: string[];
-  "graph.metrics"?: string[];
+  "graph.metrics"?: GraphMetricName[];
 
   canRemoveSeries?: (seriesIndex: number) => boolean;
   canToggleSeriesVisibility?: boolean;

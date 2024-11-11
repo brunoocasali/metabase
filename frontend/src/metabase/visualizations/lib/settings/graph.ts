@@ -55,10 +55,10 @@ import { isNumeric } from "metabase-lib/v1/types/utils/isa";
 import type { Series, VisualizationSettings } from "metabase-types/api";
 
 export const getSeriesDisplays = (
-  transformedSeries: Series,
+  series: Series,
   settings: VisualizationSettings,
 ) => {
-  return transformedSeries.map(single => settings.series(single).display);
+  return series.map(single => settings.series(single).display);
 };
 
 export function getDefaultDimensionLabel(multipleSeries: Series) {
@@ -136,9 +136,10 @@ export const GRAPH_DATA_SETTINGS: VisualizationSettingsDefinitions = {
           addedDimensions.every(
             dimension => dimension !== undefined && dimension !== null,
           ) &&
-          (vizSettings["graph.metrics"]
-            ? vizSettings["graph.metrics"].length < 2
-            : false)
+          Boolean(
+            vizSettings["graph.metrics"] &&
+              vizSettings["graph.metrics"].length < 2,
+          )
             ? t`Add series breakout`
             : null,
         columns: data.cols,
@@ -186,9 +187,10 @@ export const GRAPH_DATA_SETTINGS: VisualizationSettingsDefinitions = {
     },
     getHidden: (_, settings, extra) => {
       return (
-        (settings["graph.dimensions"]
-          ? settings["graph.dimensions"].length < 2
-          : false) || (extra?.transformedSeries?.length ?? 0) > MAX_SERIES
+        Boolean(
+          settings["graph.dimensions"] &&
+            settings["graph.dimensions"].length < 2,
+        ) || (extra?.transformedSeries?.length ?? 0) > MAX_SERIES
       );
     },
     dashboard: false,

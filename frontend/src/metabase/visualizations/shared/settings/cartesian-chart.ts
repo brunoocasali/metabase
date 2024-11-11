@@ -16,7 +16,10 @@ import {
   getFriendlyName,
   preserveExistingColumnsOrder,
 } from "metabase/visualizations/lib/utils";
-import type { ComputedVisualizationSettings } from "metabase/visualizations/types";
+import type {
+  ComputedVisualizationSettings,
+  type GraphMetricName,
+} from "metabase/visualizations/types";
 import { getColumnKey } from "metabase-lib/v1/queries/utils/column-key";
 import {
   isAny,
@@ -77,7 +80,7 @@ export function getDefaultDimensions(
 export function getDefaultMetrics(
   rawSeries: RawSeries,
   settings: ComputedVisualizationSettings,
-): (string | null)[] {
+): GraphMetricName[] {
   const [{ card }] = rawSeries;
   const prevMetrics = settings["graph.metrics"] ?? [];
   const defaultMetrics = getDefaultColumns(rawSeries).metrics;
@@ -372,7 +375,7 @@ export function getDefaultBubbleSizeCol(data: DatasetData) {
 
 export function getDefaultColumns(series: RawSeries): {
   dimensions: (string | null)[];
-  metrics: (string | null)[];
+  metrics: GraphMetricName[];
   bubble?: string | null;
 } {
   if (series[0].card.display === "scatter") {

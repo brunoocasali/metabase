@@ -1,5 +1,6 @@
 import type { EmbeddingParameters } from "metabase/public/lib/types";
 import type { PieRow } from "metabase/visualizations/echarts/pie/model/types";
+import type { GraphMetricName } from "metabase/visualizations/types";
 
 import type { Collection, CollectionId, LastEditInfo } from "./collection";
 import type { DashCardId, DashboardId } from "./dashboard";
@@ -224,7 +225,7 @@ export type VisualizationSettings = {
 
   // Series
   "graph.dimensions"?: string[];
-  "graph.metrics"?: (string | null)[];
+  "graph.metrics"?: GraphMetricName[];
 
   // Series settings
   series_settings?: Record<string, SeriesSettings>;
