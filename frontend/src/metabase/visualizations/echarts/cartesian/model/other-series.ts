@@ -4,7 +4,11 @@ import { checkNumber } from "metabase/lib/types";
 import { isEmpty } from "metabase/lib/validate";
 import { SERIES_SETTING_KEY } from "metabase/visualizations/shared/settings/series";
 import type { ComputedVisualizationSettings } from "metabase/visualizations/types";
-import type { AggregationType, DatasetColumn } from "metabase-types/api";
+import type {
+  AggregationType,
+  DatasetColumn,
+  VisualizationSettings,
+} from "metabase-types/api";
 
 import { OTHER_DATA_KEY } from "../constants/dataset";
 
@@ -80,7 +84,7 @@ export const createOtherGroupSeriesModel = (
 
 export const getAggregatedOtherSeriesValue = (
   seriesModels: SeriesModel[],
-  aggregationType: AggregationType = "sum",
+  aggregationType: VisualizationSettings["graph.other_category_aggregation_fn"] = "sum",
   datum: Datum,
 ): number => {
   const aggregation = AGGREGATION_FN_MAP[aggregationType];
@@ -91,7 +95,7 @@ export const getAggregatedOtherSeriesValue = (
 };
 
 export const getOtherSeriesAggregationLabel = (
-  aggregationType: AggregationType = "sum",
+  aggregationType: VisualizationSettings["graph.other_category_aggregation_fn"] = "sum",
 ) => AGGREGATION_FN_MAP[aggregationType].label;
 
 const sum = (values: number[]) => values.reduce((sum, value) => sum + value, 0);

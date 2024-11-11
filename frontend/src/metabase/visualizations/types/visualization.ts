@@ -203,37 +203,25 @@ type BaseVisualizationSettingDefinition<TValue> = {
   index?: number;
 };
 
-export type WidgetComponentDef<Widget, P, TValue> = {
+export type WidgetComponentDef<Widget, Props, Value> = {
   widget?: Widget;
-  props?: P;
+  props?: Props;
   getProps?: (
     series: Series,
     vizSettings: VisualizationSettings,
-    onChange: (value: TValue | null) => void,
+    onChange: (value: Value | null) => void,
     extra: SettingDefinitionExtra,
     onChangeSettings: (value: VisualizationSettings) => void,
-  ) => P;
-};
-
-export type WidgetStringDef<Widget, TValue> = {
-  widget?: Widget;
-  props?: unknown;
-  getProps?: (
-    series: Series,
-    vizSettings: VisualizationSettings,
-    onChange: (value: TValue | null) => void,
-    extra: SettingDefinitionExtra,
-    onChangeSettings: (value: VisualizationSettings) => void,
-  ) => unknown;
+  ) => Props;
 };
 
 type VisualizationSettingWidgetDef<
-  TValue,
+  Value,
   Widget extends string | ComponentType<any> = string | ComponentType<any>,
 > = Widget extends string
-  ? WidgetStringDef<Widget, TValue>
-  : Widget extends ComponentType<infer P>
-    ? WidgetComponentDef<Widget, P, TValue>
+  ? WidgetComponentDef<Widget, unknown, Value>
+  : Widget extends ComponentType<infer Props>
+    ? WidgetComponentDef<Widget, Props, Value>
     : never;
 
 export type VisualizationSettingDefinition<

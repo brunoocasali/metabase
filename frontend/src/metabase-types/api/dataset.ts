@@ -38,7 +38,7 @@ export interface DatasetColumn {
   source: string;
   aggregation_index?: number;
 
-  aggregation_type?: AggregationType;
+  aggregation_type?: "sum" | "avg" | "min" | "max" | "stddev" | "median";
 
   coercion_strategy?: string | null;
   visibility_type?: FieldVisibilityType;
