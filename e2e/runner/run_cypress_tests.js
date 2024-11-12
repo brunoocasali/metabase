@@ -5,7 +5,6 @@ const runCypress = require("./cypress-runner-run-tests");
 const { printBold } = require("./cypress-runner-utils");
 
 const e2eHost = process.env["E2E_HOST"];
-const isEmbeddingSdk = process.env["CYPRESS_IS_EMBEDDING_SDK"];
 
 const server = CypressBackend.createServer();
 const baseUrl = e2eHost || server.host;
@@ -18,10 +17,8 @@ const init = async () => {
     printBold("Starting backend");
     await CypressBackend.start(server);
 
-    if (!isEmbeddingSdk) {
-      printBold("Generating snapshots");
-      await generateSnapshots(baseUrl, cleanup);
-    }
+    printBold("Generating snapshots");
+    await generateSnapshots(baseUrl, cleanup);
   }
 
   printBold("Starting Cypress");
